@@ -1,0 +1,13 @@
+{
+  "folders": [
+	{
+		"path": "../../.."
+	}
+],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "serverless",
+    "files.associations": {
+      "ostream": "cpp"
+    }
+  }
+}
