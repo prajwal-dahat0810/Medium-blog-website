@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useBlog } from "../hooks";
 import { FullBlog } from "../components/FullBlog";
 import { Spinner } from "../components/Spinner";

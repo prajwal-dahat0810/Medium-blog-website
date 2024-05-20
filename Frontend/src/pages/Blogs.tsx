@@ -31,24 +31,25 @@ export const Blogs = () => {
       <AppBar />
       <div className="flex justify-center">
         <div className="">
-          {blogs.map(
-            (blog: {
-              author: { name: string | null };
-              id: string;
-              title: string;
-              content: string;
-            }) => (
-              <BlogCard
-                authorName={
-                  blog.author.name === null ? "Anonymous" : blog.author.name
-                }
-                title={blog.title}
-                content={blog.content}
-                id={blog.id}
-                publishDate={"4/4/2021"}
-              ></BlogCard>
-            )
-          )}
+          {blogs &&
+            blogs.map(
+              (blog: {
+                author: { name: string | null };
+                id: string;
+                title: string;
+                content: string;
+              }) => (
+                <BlogCard
+                  authorName={
+                    blog.author.name === null ? "Anonymous" : blog.author.name
+                  }
+                  title={blog.title}
+                  content={blog.content}
+                  id={blog.id}
+                  publishDate={"4/4/2021"}
+                ></BlogCard>
+              )
+            )}
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { BACKEND_URL } from "../config";
 import { useSetRecoilState } from "recoil";
 import { isLoggedIn } from "../store/atoms/Login";
 
+
 export interface Blog{
     map(arg0: (blog: { author: { name: string | null; }; id: string; title: string; content: string; }) => import("react/jsx-runtime").JSX.Element): import("react").ReactNode;
     "title": string,
@@ -15,7 +16,7 @@ export interface Blog{
 }
 export const useBlogs = () =>{
     const setLoggedIn = useSetRecoilState(isLoggedIn)
-    const [ blogs, setBlogs ] = useState< Blog >([]);
+    const [ blogs, setBlogs ] = useState< Blog[] >();
     const [loading, setLoading ] = useState(true);
 
     useEffect( (page = 1) => {

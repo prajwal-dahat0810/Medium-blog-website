@@ -1,9 +1,6 @@
-import { AppBar } from "./AppBar";
-
 export const BlogSkeleton = () => {
   return (
     <div>
-     
       <div className="flex justify-center">
         <div role="status" className="pb-4 w-screen max-w-5xl animate-pulse">
           <div className=" p-4 border-b border-slate-200 pb-4 w-screen max-w-5xl cursor-pointer">
