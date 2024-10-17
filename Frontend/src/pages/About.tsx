@@ -130,7 +130,7 @@ export const About = () => {
             <div className="w-full flex justify-between px-2 py-4  items-center h-3">
               <div className="font-bold text-slate-600">About</div>
               <div>
-                {user.about === ""
+                {user.about === null
                   ? "Not Available"
                   : user.about.slice(0, 10) + "..."}
               </div>
