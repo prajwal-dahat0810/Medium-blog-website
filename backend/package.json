@@ -5,13 +5,15 @@
   },
   "dependencies": {
     "@dahatdevs/medium-common": "^1.0.0",
-    "@prisma/client": "^5.13.0",
-    "@prisma/extension-accelerate": "^1.0.0",
-    "hono": "^4.3.0",
-    "prisma": "^5.13.0"
+    "@prisma/client": "^5.21.0",
+    "@prisma/extension-accelerate": "^1.2.1",
+    "dotenv": "^16.4.5",
+    "hono": "^4.3.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240403.0",
+    "@types/node": "^22.7.5",
+    "prisma": "^5.21.0",
     "wrangler": "^3.47.0"
   }
 }

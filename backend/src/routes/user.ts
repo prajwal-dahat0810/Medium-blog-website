@@ -3,6 +3,7 @@ import {sign, jwt,verify } from 'hono/jwt'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { signupInput,  signinInput } from "@dahatdevs/medium-common"
+import { authorize } from "../middleware/middlewares"
 
 export const userRouter =new Hono<{
 	Bindings: {
@@ -20,7 +21,6 @@ userRouter.post('/signup', async(c) => {
         }).$extends(withAccelerate())
       
     const body = await c.req.json()
-    console.log(body)
     const {success} = signupInput.safeParse({
       username: body.username,
       password:body.password,
@@ -43,8 +43,7 @@ userRouter.post('/signup', async(c) => {
       return c.json({
         message : "Email already exist"
       })
-    }  
-    console.log(body)
+    } 
    try{ const user  =await prisma.user.create({
         data:{
           email: body.username,
@@ -56,7 +55,8 @@ userRouter.post('/signup', async(c) => {
           id:user.id
         },c.env.SECRET)
         c.status(200)
-	  return c.json({token : token })}
+	  return c.json({token : token })
+  }
     catch(e){
       return c.json({massage:e})
     }
@@ -95,3 +95,58 @@ userRouter.post('/signin', async(c) => {
     c.status(200)
     return c.json({token: token })
 })
+
+userRouter.post('/me', authorize,async(c:any)=>{
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+
+    }).$extends(withAccelerate())
+     const userId = c.get('userId');
+    const user = await prisma.user.findUnique({
+      where:{
+        id:userId
+      },select: {
+        email: true,
+        name: true,
+        about:true
+       },
+    
+    })
+      try{
+          return c.json({user:user})
+        }
+        catch(error:any){
+              c.status(401);
+              return  c.json({message:"unauthorized"});
+            }
+})
+
+userRouter.put('/update', authorize, async(c:any)=>{
+  const body =  await c.req.json();
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+
+  }).$extends(withAccelerate())
+   const userId = c.get('userId');
+   try{
+      const response = await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          about:body.about,
+        },
+      })
+      if(!response.about){
+        c.status(500)
+        return c.json({message:"About update failed"})
+      }
+      c.status(200)
+        return c.json({user:response})
+      }
+      catch(error:any){
+            c.status(500);
+            return  c.json({message:"Internal Server Error"});
+          }
+})
+ 
