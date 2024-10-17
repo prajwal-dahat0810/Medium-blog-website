@@ -1,21 +1,31 @@
+import { useRecoilValue } from "recoil";
 import { Blog } from "../hooks";
 import { AppBar } from "./AppBar";
 import { Avatar } from "./Avatar";
+import { UserAtom } from "../store/atoms/User";
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
+  const user = useRecoilValue(UserAtom);
+  const date = new Date(blog.createdAt);
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "1"); // Months are zero-indexed
+  const day = String(date.getUTCDate()).padStart(2, "0");
+
   return (
     <div>
       <AppBar />
       <div className="flex justify-center px-4">
-        <div className="grid grid-cols-12 w-full pt-14 max-w-screen-2xl  pt-12 ">
-          <div className="col-span-8  ">
+        <div className="grid grid-cols-12 max-sm:col-span-4   w-full pt-14    ">
+          <div className="col-span-8  max-sm:col-span-12">
             <div className="text-6xl pt-4 font-extrabold  bold">
               {blog?.title}
             </div>
-            <div className="pt-4 text-slate-500">Posted on 4 dec 2023</div>
+            <div className="pt-4 text-slate-500">
+              Posted on {`${year}-${month}-${day}`}
+            </div>
             <div className="pt-4">{blog?.content}</div>
           </div>
-          <div className="col-span-4 pt-14 ">
+          <div className="col-span-4 max-sm:col-span-8 pt-14 ">
             <div className="text-slate-600 text-lg">Author</div>
             <div className="flex w-full">
               <div className="pr-2 flex items-center justify-center">
@@ -26,8 +36,9 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                   {blog?.author?.name || "Anonymous"}
                 </div>
                 <div className="pt-2 text-slate-500">
-                  Random Catch phrase about the author's ability to catch users
-                  attention
+                  {user.about === ""
+                    ? "Random Catch phrase about the author's ability to catch users attention"
+                    : user.about}
                 </div>
               </div>
             </div>

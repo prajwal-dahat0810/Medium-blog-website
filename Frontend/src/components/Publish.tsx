@@ -14,7 +14,7 @@ export const Publish = () => {
   return (
     <div>
       <AppBar />
-      <Alert alertVisible={alertVisible} />
+      <Alert alertVisible={alertVisible} content={"New Blog created"} />
       <div
         className={`absolute ${
           alertVisible && (!title || !description) ? "not-sr-only" : "sr-only"
@@ -57,10 +57,11 @@ export const Publish = () => {
                     },
                   }
                 );
+
                 if (!response.data.id) {
                   setAlertVisible(true);
-                  setTimeout(() => setAlertVisible(false), 2000);
-                  setTimeout(() => navigate("/signup"), 2100);
+                  setTimeout(() => setAlertVisible(false), 5000);
+                  setTimeout(() => navigate("/signup"), 5100);
                   return;
                 }
                 navigate(`/blog/${response.data.id}`);

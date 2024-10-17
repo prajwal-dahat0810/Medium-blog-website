@@ -6,6 +6,9 @@ import { Blogs } from "./pages/Blogs.tsx";
 import { Blog } from "./pages/Blog.tsx";
 import { Publish } from "./components/Publish.tsx";
 import { RecoilRoot } from "recoil";
+import { Dashboard } from "./pages/Dashboard.tsx";
+import { Update } from "./pages/Update.tsx";
+import { About } from "./pages/About.tsx";
 function App() {
   return (
     <>
@@ -18,6 +21,9 @@ function App() {
             <Route path="/blog/:id" element={<Blog />} />
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/publish" element={<Publish />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/update/:id" element={<Update />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </RecoilRoot>
       </BrowserRouter>

@@ -1,21 +1,52 @@
 import { useEffect, useState } from "react"
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-import { useSetRecoilState } from "recoil";
-import { isLoggedIn } from "../store/atoms/Login";
 
 
 export interface Blog{
+    createdAt: string;
     map(arg0: (blog: { author: { name: string | null; }; id: string; title: string; content: string; }) => import("react/jsx-runtime").JSX.Element): import("react").ReactNode;
     "title": string,
     "content": string,
     "id": string,
     "author": {
+        about: string;
         "name": string
     }
 }
+export const useUserBlogs = () =>{
+ 
+    const [ blogs, setBlogs ] = useState< Blog[] >();
+    const [loading, setLoading ] = useState(true);
+
+    useEffect(() => {
+        axios
+          .post(
+            `${BACKEND_URL}/api/v1/blog/dashboard`,
+            {},
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            }
+          )
+          .then((response) => {
+            if(response.data.message){
+                setBlogs([]);
+                setLoading(false);
+                return
+            }
+            setBlogs(response.data.blogs);
+            setLoading(false);
+          });
+      }, []);
+    
+    return {
+        blogs, loading
+    }
+}
 export const useBlogs = () =>{
-    const setLoggedIn = useSetRecoilState(isLoggedIn)
+    
     const [ blogs, setBlogs ] = useState< Blog[] >();
     const [loading, setLoading ] = useState(true);
 
@@ -27,7 +58,8 @@ export const useBlogs = () =>{
         })
             .then( response => {
                 if(response.data.message){
-                    setLoggedIn(false)
+                    setBlogs([])
+                    setLoading(false)
                     return
                 }
                 setBlogs(response.data.posts);
@@ -57,9 +89,7 @@ export const useBlog = ({ id }: { id: string }) => {
                     window.location.href='/'
                 }
                 setTimeout( ()=>{setBlog(response.data.blog);setLoading(false)}, 1000 )
-                
                 })
-        
         }, [id])
         
 

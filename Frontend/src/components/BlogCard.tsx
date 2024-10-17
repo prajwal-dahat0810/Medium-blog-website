@@ -1,37 +1,41 @@
 import { Link } from "react-router-dom";
 import { Avatar } from "./Avatar";
 
-interface blogCardProps {
+export interface blogCardProps {
   authorName: string;
+  authorAbout: string;
   title: string;
   content: string;
-  publishDate: string;
+  createdAt: string;
   id: string;
 }
 export const BlogCard = ({
   authorName,
   title,
   content,
-  publishDate,
+  createdAt,
   id,
 }: blogCardProps) => {
+  const date = new Date(createdAt);
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "1"); // Months are zero-indexed
+  const day = String(date.getUTCDate()).padStart(2, "0");
   return (
     <Link to={`/blog/${id}`}>
       <div className=" p-4 border-b border-slate-200 pb-4 w-screen max-w-5xl cursor-pointer">
         <div className="flex items-center">
           <div className="justify-center flex-col	">
-            {" "}
             <Avatar name={authorName} size={"big"} />
           </div>
 
           <div className="font-medium justify-center items-center flex-col	 pl-2">
             {authorName}
           </div>
-          <div className="font-extralight  justify-center flex-col pl-2 flex justify-center  items-center">
-            <div className="w-1 h-1 rounded bg-black  flex  bg-slate-500"></div>
+          <div className="font-extralight  justify-center flex-col pl-2 flex   items-center">
+            <div className="w-1 h-1 rounded   flex  bg-slate-500"></div>
           </div>
           <div className="font-thin pl-2 flex justify-center text-slate-400">
-            {publishDate}
+            {`${year}-${month}-${day}`}
           </div>
         </div>
         <div className="text-xl pt-3 font-semibold">{title}</div>

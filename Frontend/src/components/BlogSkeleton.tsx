@@ -12,7 +12,7 @@ export const BlogSkeleton = () => {
               <div className="font-medium justify-center items-center flex-col	 pl-2">
                 <div className="h-2 bg-gray-200 rounded-full  max-w-[360px] mb-2.5"></div>
               </div>
-              <div className="font-extralight  justify-center flex-col pl-2 flex justify-center  items-center">
+              <div className="font-extralight  justify-center flex-col pl-2 flex  items-center">
                 <div className="h-2 bg-gray-200 rounded-full  mb-2.5"></div>
               </div>
               <div className="font-thin pl-2 flex justify-center text-slate-400">

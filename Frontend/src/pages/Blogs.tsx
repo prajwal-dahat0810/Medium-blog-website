@@ -1,18 +1,22 @@
-import { useRecoilValue } from "recoil";
 import { AppBar } from "../components/AppBar";
 import { BlogCard } from "../components/BlogCard";
 import { BlogSkeleton } from "../components/BlogSkeleton";
 import { useBlogs } from "../hooks";
-import { isLoggedIn } from "../store/atoms/Login";
+export interface BlogInterface {
+  author: {
+    name: string | null;
+    about?: string | null;
+  };
+  id: number;
+  title: string;
+  createdAt: string;
+  content: string;
+}
 export const Blogs = () => {
   const { blogs, loading } = useBlogs();
+  console.log(blogs?.at(0)?.author.name);
 
-  const isLogged = useRecoilValue(isLoggedIn);
-  if (!isLogged) {
-    window.location.href = "/signup";
-  }
   if (loading) {
-    console.log("is in blogs", isLogged);
     return (
       <div>
         <AppBar />
@@ -31,25 +35,22 @@ export const Blogs = () => {
       <AppBar />
       <div className="flex justify-center">
         <div className="">
+          {blogs && blogs.length === 0 && (
+            <div className="pt-15 w-screen  min-h-96 flex items-center justify-center ">
+              No Blogs Available
+            </div>
+          )}
           {blogs &&
-            blogs.map(
-              (blog: {
-                author: { name: string | null };
-                id: string;
-                title: string;
-                content: string;
-              }) => (
-                <BlogCard
-                  authorName={
-                    blog.author.name === null ? "Anonymous" : blog.author.name
-                  }
-                  title={blog.title}
-                  content={blog.content}
-                  id={blog.id}
-                  publishDate={"4/4/2021"}
-                ></BlogCard>
-              )
-            )}
+            blogs.map((blog) => (
+              <BlogCard
+                authorName={blog.author.name}
+                authorAbout={blog.author.about}
+                title={blog.title}
+                content={blog.content}
+                createdAt={blog.createdAt}
+                id={blog.id}
+              ></BlogCard>
+            ))}
         </div>
       </div>
     </div>
