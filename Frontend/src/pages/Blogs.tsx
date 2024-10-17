@@ -14,7 +14,6 @@ export interface BlogInterface {
 }
 export const Blogs = () => {
   const { blogs, loading } = useBlogs();
-  console.log(blogs?.at(0)?.author.name);
 
   if (loading) {
     return (
