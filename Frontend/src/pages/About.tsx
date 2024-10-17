@@ -135,9 +135,9 @@ export const About = () => {
             activeButton === "button1" ? " sr-only" : "not-sr-only"
           } py-5 row-start-2 col-start-2   max-sm:col-start-1 col-span-3 row-span-1 max-sm:col-span-8  px-5  w-full max-sm:p-0`}
         >
-          <div className="px-2 flex flex-col gap-4  py-2 w-full h-full">
+          <div className="px-2  flex flex-col gap-4  py-2 w-full h-full">
             <textarea
-              defaultValue={user.about === "" ? "" : user.about}
+              defaultValue={user.about === null ? "" : user.about}
               onChange={(e) => setAbout(e.target.value)}
               placeholder={
                 user.about === "" ? "" : "Tell the word about yourself"
