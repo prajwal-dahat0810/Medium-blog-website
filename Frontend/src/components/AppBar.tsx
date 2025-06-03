@@ -1,4 +1,4 @@
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { Avatar } from "./Avatar";
 import { Link, useNavigate } from "react-router-dom";
 import { isLoggedIn } from "../store/atoms/Login";
@@ -8,13 +8,15 @@ import { UserAtom } from "../store/atoms/User";
 export const AppBar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  useEffect(() => {}, []);
+  const [isLogged, setLoggedIn] = useRecoilState(isLoggedIn);
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
+  if (!isLogged) {
+    window.location.href = "/signin";
+  }
   const navigate = useNavigate();
   const user = useRecoilValue(UserAtom);
-  const setLoggedIn = useSetRecoilState(isLoggedIn);
 
   return (
     <div className="border-b flex max-sm:px-3  max-sm:max-w-2xl items-center justify-between py-4 px-10">
@@ -51,10 +53,7 @@ export const AppBar = () => {
             aria-controls="user-dropdown"
             onClick={toggleDropdown}
           >
-            <Avatar
-              name={user.name === null ? "Anonymous" : user.name}
-              size={"big"}
-            />
+            <Avatar name={!user.name ? "Anonymous" : user.name} size={"big"} />
           </button>
           <div
             className={`z-50 ${
@@ -70,7 +69,10 @@ export const AppBar = () => {
                 {user.email}
               </span>
             </div>
-            <ul className="py-2" aria-labelledby="user-menu-button">
+            <ul
+              className="py-2 cursor-pointer"
+              aria-labelledby="user-menu-button"
+            >
               <li>
                 <a
                   onClick={() => navigate("/dashboard")}
@@ -79,7 +81,7 @@ export const AppBar = () => {
                   Dashboard
                 </a>
               </li>
-              <li>
+              <li className="cursor-pointer">
                 <a
                   onClick={() => navigate("/about")}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
@@ -87,7 +89,7 @@ export const AppBar = () => {
                   Profile
                 </a>
               </li>
-              <li>
+              <li className="cursor-pointer">
                 <a
                   onClick={() => navigate("/blogs")}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
@@ -95,7 +97,7 @@ export const AppBar = () => {
                   Home
                 </a>
               </li>
-              <li>
+              <li className="cursor-pointer">
                 <a
                   onClick={() => {
                     localStorage.removeItem("token");

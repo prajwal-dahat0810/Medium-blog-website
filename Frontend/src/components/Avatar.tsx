@@ -1,4 +1,4 @@
-export const  Avatar = ({
+export const Avatar = ({
   name,
   size,
 }: {
@@ -16,7 +16,7 @@ export const  Avatar = ({
           size === "small" ? "text-xs" : "text-md"
         } text-md text-gray-600 dark:text-gray-300`}
       >
-        {name[0]}
+        {name[0].toUpperCase()}
       </span>
     </div>
   );

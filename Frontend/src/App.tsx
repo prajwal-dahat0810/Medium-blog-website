@@ -9,6 +9,7 @@ import { RecoilRoot } from "recoil";
 import { Dashboard } from "./pages/Dashboard.tsx";
 import { Update } from "./pages/Update.tsx";
 import { About } from "./pages/About.tsx";
+import Update2 from "./pages/Update2.tsx";
 function App() {
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
             <Route path="/publish" element={<Publish />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/update/:id" element={<Update />} />
+            <Route path="/update2" element={<Update2 />} />
             <Route path="/about" element={<About />} />
           </Routes>
         </RecoilRoot>

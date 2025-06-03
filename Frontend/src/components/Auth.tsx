@@ -59,16 +59,18 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
 
         if (response.data.message) {
           setBtnLoading(false);
+          console.log("in if ", response.data.message);
           setAlertCon({ alertVisible: true, content: response.data.message });
         } else {
           const jwt = response.data.token;
-          setBtnLoading(false);
           localStorage.setItem("token", jwt);
-          setLoggedIn(true);
           navigate("/blogs");
+          setLoggedIn(true);
+          setBtnLoading(false);
         }
       }
     } catch (e: any) {
+      console.log(e, "explain this error  ");
       setBtnLoading(false);
       setAlertCon({ alertVisible: true, content: e.response.data.message });
     }

@@ -1,7 +1,9 @@
+import { useRecoilValue } from "recoil";
 import { AppBar } from "../components/AppBar";
 import { BlogCard } from "../components/BlogCard";
 import { BlogSkeleton } from "../components/BlogSkeleton";
 import { useBlogs } from "../hooks";
+import { isLoggedIn } from "../store/atoms/Login";
 export interface BlogInterface {
   author: {
     name: string | null;
@@ -13,6 +15,10 @@ export interface BlogInterface {
   content: string;
 }
 export const Blogs = () => {
+  const islogged = useRecoilValue(isLoggedIn);
+  if (!islogged) {
+    window.location.href = "/signup";
+  }
   const { blogs, loading } = useBlogs();
 
   if (loading) {

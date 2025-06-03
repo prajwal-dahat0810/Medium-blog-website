@@ -11,6 +11,7 @@ export const Dashboard = () => {
   const user = useRecoilValue(UserAtom);
 
   const isLogged = useRecoilValue(isLoggedIn);
+  console.log(isLogged);
   if (!isLogged) {
     window.location.href = "/signup";
   }
