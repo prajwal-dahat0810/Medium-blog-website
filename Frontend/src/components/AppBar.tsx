@@ -1,8 +1,8 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Avatar } from "./Avatar";
 import { Link, useNavigate } from "react-router-dom";
 import { isLoggedIn } from "../store/atoms/Login";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { UserAtom } from "../store/atoms/User";
 
 export const AppBar = () => {
