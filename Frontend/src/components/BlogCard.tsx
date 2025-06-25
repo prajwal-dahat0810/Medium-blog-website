@@ -17,9 +17,13 @@ export const BlogCard = ({
   id,
 }: blogCardProps) => {
   const date = new Date(createdAt);
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, "1"); // Months are zero-indexed
-  const day = String(date.getUTCDate()).padStart(2, "0");
+  const formattedDate = date.toLocaleDateString("en-GB", {
+    // 'en-GB' for day-month-year
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+  });
+
   return (
     <Link to={`/blog/${id}`}>
       <div className=" p-4 border-b border-slate-200 pb-4 w-screen max-w-5xl cursor-pointer">
@@ -35,7 +39,7 @@ export const BlogCard = ({
             <div className="w-1 h-1 rounded   flex  bg-slate-500"></div>
           </div>
           <div className="font-thin pl-2 flex justify-center text-slate-400">
-            {`${year}-${month}-${day}`}
+            {`${formattedDate}`}
           </div>
         </div>
         <div className="text-xl pt-3 font-semibold">{title}</div>

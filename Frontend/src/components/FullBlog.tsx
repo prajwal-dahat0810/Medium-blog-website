@@ -7,9 +7,12 @@ import { UserAtom } from "../store/atoms/User";
 export const FullBlog = ({ blog }: { blog: Blog }) => {
   const user = useRecoilValue(UserAtom);
   const date = new Date(blog.createdAt);
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, "1"); // Months are zero-indexed
-  const day = String(date.getUTCDate()).padStart(2, "0");
+  const formattedDate = date.toLocaleDateString("en-GB", {
+    // 'en-GB' for day-month-year
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 
   return (
     <div>
@@ -21,7 +24,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
               {blog?.title}
             </div>
             <div className="pt-4 text-slate-500">
-              Posted on {`${year}-${month}-${day}`}
+              Posted on {`${formattedDate}`}
             </div>
             <div className="pt-4">{blog?.content}</div>
           </div>
